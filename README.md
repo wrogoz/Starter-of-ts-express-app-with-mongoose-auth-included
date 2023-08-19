@@ -2,14 +2,18 @@
 
 # Technologies:
 
+- Typescript
 - Express
 - MongoDB
 - Mongoose
 - BCrypt
 - JWT
 - Cors
-- dotenv
-- helmet
+- Dotenv
+- Helmet
+- Concurrently
+- Rimraf
+- 
 
 # Features:
 
@@ -18,5 +22,5 @@
 # Additional info:
 
 - Change name of envExample to .env
-- In app.js change cors option to set properly access for FrontEnd app.
+- In app.ts change cors option to set properly access for FrontEnd app.
 # Starter-of-ts-express-app-with-mongoose-auth-included

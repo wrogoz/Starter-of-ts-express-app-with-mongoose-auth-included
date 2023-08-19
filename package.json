@@ -1,0 +1,33 @@
+{
+  "name": "WRogozExpressStarterWithTs",
+  "version": "1.0.0",
+  "description": "express starter with mongoose, cors, helmet, dotenv, bcrypt, jsonwebtoken",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf -G dist && npx tsc",
+    "preprod": "npm run build",
+    "prod": "node dist/app.js",
+    "predev": "npm run build",
+    "dev": "concurrently \"npx tsc -w\" \"nodemon dist/app.js\""
+  },
+  "author": "Wojciech Rogóż",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "concurrently": "^8.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "helmet": "^7.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^7.1.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^20.0.0"
+  }
+}

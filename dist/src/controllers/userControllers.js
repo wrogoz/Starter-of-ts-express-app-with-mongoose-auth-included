@@ -18,10 +18,13 @@ const userModel_1 = require("../models/userModel");
 const getUserData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield userModel_1.User.findById(req.body.user.id);
+        if (!user) {
+            res.status(404).send({ message: "user not found" });
+        }
         res.send(user);
     }
     catch (error) {
-        res.status(500).send({ error: "no user found" });
+        res.status(500).send(error.message);
     }
 });
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -48,7 +51,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield userModel_1.User.findOne({ email: req.body.email });
         if (!user) {
-            res.status(400).send("wrong email or password");
+            res.status(400).send({ message: "wrong email or password" });
         }
         else {
             const isPasswordValid = yield bcrypt_1.default.compare(req.body.password, user.password);
@@ -57,7 +60,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 res.send({ token });
             }
             else {
-                res.send("wrong email or password");
+                res.send({ message: "wrong email or password" });
             }
         }
     }

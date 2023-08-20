@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-const User = require("../models/userModel");
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
+import { User } from "../models/userModel";
 
 const getUserData = async (req: Request, res: Response) => {
   try {
@@ -63,7 +63,7 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-module.exports = {
+export const userController = {
   getUserData,
   registerUser,
   loginUser,

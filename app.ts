@@ -1,10 +1,11 @@
 import express from "express";
-require("dotenv").config();
+import { userRouter } from "./src/routes/userRoute";
+import "dotenv/config";
+import "./config/db";
+import helmet from "helmet";
+import cors from "cors";
+
 const app = express();
-require("./db/db");
-const helmet = require("helmet");
-const user = require("./routes/userRoute");
-const cors = require("cors");
 const corsOption = {
   origin: ["localhost:3000", "https://example-fe-origin-address.com"],
   credentials: true,
@@ -15,7 +16,7 @@ app.use(cors(corsOption));
 
 app.use(helmet());
 app.use(express.json());
-app.use("/user", user);
+app.use("/user", userRouter);
 
 const port = process.env.PORT || 8000;
 

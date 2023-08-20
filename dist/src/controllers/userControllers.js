@@ -8,12 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const User = require("../models/userModel");
-const bcrypt = require("bcrypt");
+exports.userController = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const userModel_1 = require("../models/userModel");
 const getUserData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User.findById(req.body.user.id);
+        const user = yield userModel_1.User.findById(req.body.user.id);
         res.send(user);
     }
     catch (error) {
@@ -22,14 +26,14 @@ const getUserData = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        if (yield User.findOne({ email: req.body.email })) {
+        if (yield userModel_1.User.findOne({ email: req.body.email })) {
             res.status(409).send({
                 message: "email already exist",
             });
         }
         else {
-            const user = new User(req.body);
-            const hashedPassword = yield bcrypt.hash(user.password, 8);
+            const user = new userModel_1.User(req.body);
+            const hashedPassword = yield bcrypt_1.default.hash(user.password, 8);
             user.password = hashedPassword;
             yield user.save();
             const token = user.createToken();
@@ -42,12 +46,12 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User.findOne({ email: req.body.email });
+        const user = yield userModel_1.User.findOne({ email: req.body.email });
         if (!user) {
             res.status(400).send("wrong email or password");
         }
         else {
-            const isPasswordValid = yield bcrypt.compare(req.body.password, user.password);
+            const isPasswordValid = yield bcrypt_1.default.compare(req.body.password, user.password);
             if (isPasswordValid) {
                 const token = user.createToken();
                 res.send({ token });
@@ -63,14 +67,14 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User.findByIdAndDelete(req.body.id);
+        const user = yield userModel_1.User.findByIdAndDelete(req.body.id);
         res.status(200).send({ message: "user deleted" });
     }
     catch (error) {
         res.status(500).send(error.message);
     }
 });
-module.exports = {
+exports.userController = {
     getUserData,
     registerUser,
     loginUser,
